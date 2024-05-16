@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl_item_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp">
 
     <ImageView
         android:id="@+id/iv_item_category_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/btn_item_edit"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,8 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="ITEM_NAME"
+        android:text="NAME"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,9 +31,11 @@
         android:id="@+id/tv_item_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="ITEM_PRICE"
+        android:layout_marginStart="8dp"
+        android:text="PRICE"
+        android:textColor="#14C514"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/tv_item_name"
         app:layout_constraintTop_toTopOf="@+id/tv_item_name" />
 
@@ -43,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="ITEM_DESCRIPTION"
+        android:text="DESCRIPTION"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/tv_item_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_item_name" />
@@ -52,7 +53,6 @@
         android:id="@+id/cb_item_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:button="@null"
         android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
         android:gravity="center"
@@ -87,5 +87,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.25" />
+
+    <ImageView
+        android:id="@+id/iv_currency_icon"
+        android:layout_width="36dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_item_price"
+        app:layout_constraintStart_toEndOf="@+id/tv_item_price"
+        app:layout_constraintTop_toTopOf="@+id/tv_item_price"
+        app:srcCompat="@drawable/money_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
