@@ -7,15 +7,14 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.gery.cshoppinglist.R
 import com.gery.cshoppinglist.data.ShoppingItem
-import com.gery.cshoppinglist.data.ShoppingItemCategory
 import com.gery.cshoppinglist.databinding.ShoppingListItemLayoutBinding
 
 class ShoppingListAdapter : RecyclerView.Adapter<ShoppingListAdapter.ViewHolder> {
 
     private val items = mutableListOf(
-        ShoppingItem("Milk", "This is milk", 2, ShoppingItemCategory.FOOD, true),
-        ShoppingItem("Smartphone", "This is smartphone", 220, ShoppingItemCategory.ELECTRONICS, false),
-        ShoppingItem("Shirt", "This is shirt", 20, ShoppingItemCategory.CLOTHES, false)
+        ShoppingItem("Milk", "This is milk", 2, 1, true),
+        ShoppingItem("Smartphone", "This is smartphone", 220, 2, false),
+        ShoppingItem("Shirt", "This is shirt", 20, 0, false)
     )
     private val context: Context
 
@@ -74,15 +73,15 @@ class ShoppingListAdapter : RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>
             shopItemBinding.cbItemStatus.isChecked = shopItem.status
 
             when (shopItem.category) {
-                ShoppingItemCategory.CLOTHES -> {
+                0 -> {
                     shopItemBinding.ivItemCategoryIcon.setImageResource(
                         R.drawable.apparel_24dp)
                 }
-                ShoppingItemCategory.FOOD -> {
+                1 -> {
                     shopItemBinding.ivItemCategoryIcon.setImageResource(
                         R.drawable.food_24dp)
                 }
-                ShoppingItemCategory.ELECTRONICS -> {
+                2 -> {
                     shopItemBinding.ivItemCategoryIcon.setImageResource(
                         R.drawable.electronics_24dp)
                 }

@@ -9,9 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.gery.cshoppinglist.adapter.ShoppingListAdapter
+import com.gery.cshoppinglist.data.ShoppingItem
 import com.gery.cshoppinglist.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ShoppingItemDialog.ShoppingItemDialogHandler {
     lateinit var binding: ActivityMainBinding
 
     lateinit var shoppingListAdapter: ShoppingListAdapter
@@ -31,6 +32,10 @@ class MainActivity : AppCompatActivity() {
 
         shoppingListAdapter = ShoppingListAdapter(this)
         binding.rvMain.adapter = shoppingListAdapter
+
+        binding.fabAddItem.setOnClickListener {
+            ShoppingItemDialog().show(supportFragmentManager, "ShoppingItemDialog")
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -45,5 +50,13 @@ class MainActivity : AppCompatActivity() {
         } else {
             return super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun shoppingItemCreated(item: ShoppingItem) {
+        shoppingListAdapter.addItem(item)
+    }
+
+    override fun shoppingItemModified(item: ShoppingItem) {
+        TODO("Not yet implemented")
     }
 }
