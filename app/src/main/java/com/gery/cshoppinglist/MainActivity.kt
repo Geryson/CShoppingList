@@ -8,10 +8,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.gery.cshoppinglist.adapter.ShoppingListAdapter
 import com.gery.cshoppinglist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+
+    lateinit var shoppingListAdapter: ShoppingListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -25,6 +28,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         setSupportActionBar(binding.tbMain)
+
+        shoppingListAdapter = ShoppingListAdapter(this)
+        binding.rvMain.adapter = shoppingListAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
