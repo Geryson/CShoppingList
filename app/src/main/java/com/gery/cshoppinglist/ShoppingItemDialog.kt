@@ -9,11 +9,14 @@ import androidx.fragment.app.DialogFragment
 import com.gery.cshoppinglist.data.ShoppingItem
 import com.gery.cshoppinglist.databinding.ShoppingItemDialogBinding
 
-class ShoppingItemDialog : DialogFragment() {
+class ShoppingItemDialog(item: ShoppingItem?, position: Int) : DialogFragment() {
+
+    var shoppingItem = item
+    var shoppingItemPosition = position
 
     interface ShoppingItemDialogHandler {
         fun shoppingItemCreated(item: ShoppingItem)
-        fun shoppingItemModified(item: ShoppingItem)
+        fun shoppingItemModified(item: ShoppingItem, position: Int)
     }
 
     private lateinit var shoppingItemHandler: ShoppingItemDialogHandler
@@ -32,7 +35,12 @@ class ShoppingItemDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("New Item")
+
+        var editMode = shoppingItem != null
+
+        val dialogTitle = if (editMode) "Edit Item" else "New Item"
+
+        builder.setTitle(dialogTitle)
 
         shoppingDialogBinding = ShoppingItemDialogBinding.inflate(
             requireActivity().layoutInflater
@@ -53,6 +61,14 @@ class ShoppingItemDialog : DialogFragment() {
         builder.setPositiveButton("OK") { dialog, which ->
             //... keep empty
         }
+
+        if (editMode) {
+            shoppingDialogBinding.etItemDialogName.setText(shoppingItem!!.name)
+            shoppingDialogBinding.etItemDialogDescription.setText(shoppingItem!!.description)
+            shoppingDialogBinding.etItemDialogPrice.setText(shoppingItem!!.price.toString())
+            shoppingDialogBinding.spItemDialogCategoryPicker.setSelection(shoppingItem!!.category)
+            shoppingDialogBinding.cbItemDialogStatus.isChecked = shoppingItem!!.status
+        }
         return builder.create()
     }
 
@@ -65,7 +81,11 @@ class ShoppingItemDialog : DialogFragment() {
         positiveButton.setOnClickListener {
             if (shoppingDialogBinding.etItemDialogName.text!!.isNotEmpty()) {
                 if (shoppingDialogBinding.etItemDialogPrice.text!!.isNotEmpty()) {
-                    handleItemCreate()
+                    if (shoppingItem != null) {
+                        handleItemEdit()
+                    } else {
+                        handleItemCreate()
+                    }
 
                     dialog.dismiss()
                 } else {
@@ -79,14 +99,22 @@ class ShoppingItemDialog : DialogFragment() {
 
     fun handleItemCreate() {
         shoppingItemHandler.shoppingItemCreated(
-            ShoppingItem(
-                shoppingDialogBinding.etItemDialogName.text.toString(),
-                shoppingDialogBinding.etItemDialogDescription.text.toString(),
-                shoppingDialogBinding.etItemDialogPrice.text.toString().toInt(),
-                shoppingDialogBinding.spItemDialogCategoryPicker.selectedItemPosition,
-                false
-            )
+            generateShoppingItem()
         )
 
+    }
+
+    private fun generateShoppingItem() = ShoppingItem(
+        shoppingDialogBinding.etItemDialogName.text.toString(),
+        shoppingDialogBinding.etItemDialogDescription.text.toString(),
+        shoppingDialogBinding.etItemDialogPrice.text.toString().toInt(),
+        shoppingDialogBinding.spItemDialogCategoryPicker.selectedItemPosition,
+        shoppingDialogBinding.cbItemDialogStatus.isChecked
+    )
+
+    fun handleItemEdit() {
+        shoppingItemHandler.shoppingItemModified(
+            generateShoppingItem(), shoppingItemPosition
+        )
     }
 }

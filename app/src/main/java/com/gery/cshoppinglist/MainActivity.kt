@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), ShoppingItemDialog.ShoppingItemDialogH
         binding.rvMain.adapter = shoppingListAdapter
 
         binding.fabAddItem.setOnClickListener {
-            ShoppingItemDialog().show(supportFragmentManager, "ShoppingItemDialog")
+            ShoppingItemDialog(null, -1).show(supportFragmentManager, "ShoppingItemDialog")
         }
     }
 
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), ShoppingItemDialog.ShoppingItemDialogH
         shoppingListAdapter.addItem(item)
     }
 
-    override fun shoppingItemModified(item: ShoppingItem) {
-        TODO("Not yet implemented")
+    override fun shoppingItemModified(item: ShoppingItem, position: Int) {
+        shoppingListAdapter.editItem(item, position)
     }
 }

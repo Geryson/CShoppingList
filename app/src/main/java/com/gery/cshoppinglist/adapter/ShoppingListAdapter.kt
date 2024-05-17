@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.gery.cshoppinglist.MainActivity
 import com.gery.cshoppinglist.R
+import com.gery.cshoppinglist.ShoppingItemDialog
 import com.gery.cshoppinglist.data.ShoppingItem
 import com.gery.cshoppinglist.databinding.ShoppingListItemLayoutBinding
 
@@ -35,6 +37,15 @@ class ShoppingListAdapter : RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>
             deleteItem(holder.adapterPosition)
         }
 
+        holder.shopItemBinding.btnItemEdit.setOnClickListener {
+            editItem(holder.adapterPosition)
+        }
+
+        holder.shopItemBinding.cbItemStatus.setOnClickListener {
+            items[holder.adapterPosition].status = holder.shopItemBinding.cbItemStatus.isChecked
+            notifyItemChanged(holder.adapterPosition)
+        }
+
         if (position % 2 == 0) {
             holder.shopItemBinding.clItemContainer.setBackgroundColor(
                 ContextCompat.getColor(holder.itemView.context, R.color.list_item_background_even))
@@ -42,6 +53,14 @@ class ShoppingListAdapter : RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>
             holder.shopItemBinding.clItemContainer.setBackgroundColor(
                 ContextCompat.getColor(context, R.color.list_item_background_odd))
         }
+    }
+
+    private fun editItem(adapterPosition: Int) {
+        // Get the item to edit
+        val item = items[adapterPosition]
+
+        // Open the ShoppingItemDialog with the item data
+        ShoppingItemDialog(item, adapterPosition).show((context as MainActivity).supportFragmentManager, "ShoppingItemDialog_EDIT")
     }
 
     private fun deleteItem(adapterPosition: Int) {
@@ -57,6 +76,11 @@ class ShoppingListAdapter : RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>
         items.add(item)
         notifyItemInserted(items.lastIndex)
         //notifyDataSetChanged()
+    }
+
+    fun editItem(item: ShoppingItem, position: Int) {
+        items[position] = item
+        notifyItemChanged(position)
     }
 
     fun deleteAll() {
