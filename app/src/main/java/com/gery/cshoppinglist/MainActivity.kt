@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), ShoppingItemDialog.ShoppingItemDialogH
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.getItemId() == R.id.action_delete_all) {
-            Toast.makeText(this, "Delete All", Toast.LENGTH_SHORT).show()
+            shoppingListAdapter.deleteAll()
             return true
         } else {
             return super.onOptionsItemSelected(item)
