@@ -4,6 +4,6 @@
     <item
         android:id="@+id/action_delete_all"
         app:showAsAction="always"
-        android:title="Delete all">
+        android:title="@string/TOOLBAR_ACTION_DELETE_ALL">
     </item>
 </menu>

@@ -3,7 +3,6 @@ package com.gery.cshoppinglist
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,9 +12,9 @@ import com.gery.cshoppinglist.data.ShoppingItem
 import com.gery.cshoppinglist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), ShoppingItemDialog.ShoppingItemDialogHandler {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
-    lateinit var shoppingListAdapter: ShoppingListAdapter
+    private lateinit var shoppingListAdapter: ShoppingListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity(), ShoppingItemDialog.ShoppingItemDialogH
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.getItemId() == R.id.action_delete_all) {
+        if (item.itemId == R.id.action_delete_all) {
             shoppingListAdapter.deleteAll()
             return true
         } else {

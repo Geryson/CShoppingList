@@ -11,8 +11,8 @@ import com.gery.cshoppinglist.databinding.ShoppingItemDialogBinding
 
 class ShoppingItemDialog(item: ShoppingItem?, position: Int) : DialogFragment() {
 
-    var shoppingItem = item
-    var shoppingItemPosition = position
+    private var shoppingItem = item
+    private var shoppingItemPosition = position
 
     interface ShoppingItemDialogHandler {
         fun shoppingItemCreated(item: ShoppingItem)
@@ -36,7 +36,7 @@ class ShoppingItemDialog(item: ShoppingItem?, position: Int) : DialogFragment() 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
 
-        var editMode = shoppingItem != null
+        val editMode = shoppingItem != null
 
         val dialogTitle = if (editMode) "Edit Item" else "New Item"
 
@@ -46,7 +46,7 @@ class ShoppingItemDialog(item: ShoppingItem?, position: Int) : DialogFragment() 
             requireActivity().layoutInflater
         )
 
-        var categoryAdapter = ArrayAdapter.createFromResource(
+        val categoryAdapter = ArrayAdapter.createFromResource(
             requireActivity(),
             R.array.category,
             android.R.layout.simple_spinner_item
@@ -59,7 +59,6 @@ class ShoppingItemDialog(item: ShoppingItem?, position: Int) : DialogFragment() 
         builder.setView(shoppingDialogBinding.root)
 
         builder.setPositiveButton("OK") { dialog, which ->
-            //... keep empty
         }
 
         if (editMode) {
@@ -97,7 +96,7 @@ class ShoppingItemDialog(item: ShoppingItem?, position: Int) : DialogFragment() 
         }
     }
 
-    fun handleItemCreate() {
+    private fun handleItemCreate() {
         shoppingItemHandler.shoppingItemCreated(
             generateShoppingItem()
         )
@@ -112,7 +111,7 @@ class ShoppingItemDialog(item: ShoppingItem?, position: Int) : DialogFragment() 
         shoppingDialogBinding.cbItemDialogStatus.isChecked
     )
 
-    fun handleItemEdit() {
+    private fun handleItemEdit() {
         shoppingItemHandler.shoppingItemModified(
             generateShoppingItem(), shoppingItemPosition
         )

@@ -11,18 +11,14 @@ import com.gery.cshoppinglist.ShoppingItemDialog
 import com.gery.cshoppinglist.data.ShoppingItem
 import com.gery.cshoppinglist.databinding.ShoppingListItemLayoutBinding
 
-class ShoppingListAdapter : RecyclerView.Adapter<ShoppingListAdapter.ViewHolder> {
+class ShoppingListAdapter(private val context: Context) :
+    RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>() {
 
     private val items = mutableListOf(
         ShoppingItem("Milk", "This is milk", 2, 1, true),
         ShoppingItem("Smartphone", "This is smartphone", 220, 2, false),
         ShoppingItem("Shirt", "This is shirt", 20, 0, false)
     )
-    private val context: Context
-
-    constructor(context: Context) : super() {
-        this.context = context
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val shopItemBinding = ShoppingListItemLayoutBinding.inflate(
@@ -56,10 +52,8 @@ class ShoppingListAdapter : RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>
     }
 
     private fun editItem(adapterPosition: Int) {
-        // Get the item to edit
         val item = items[adapterPosition]
 
-        // Open the ShoppingItemDialog with the item data
         ShoppingItemDialog(item, adapterPosition).show((context as MainActivity).supportFragmentManager, "ShoppingItemDialog_EDIT")
     }
 
@@ -75,7 +69,6 @@ class ShoppingListAdapter : RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>
     fun addItem(item: ShoppingItem) {
         items.add(item)
         notifyItemInserted(items.lastIndex)
-        //notifyDataSetChanged()
     }
 
     fun editItem(item: ShoppingItem, position: Int) {
