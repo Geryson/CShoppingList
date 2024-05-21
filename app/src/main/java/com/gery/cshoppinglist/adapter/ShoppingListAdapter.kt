@@ -60,6 +60,7 @@ class ShoppingListAdapter(private val context: Context) :
     private fun deleteItem(adapterPosition: Int) {
         items.removeAt(adapterPosition)
         notifyItemRemoved(adapterPosition)
+        notifyItemRangeChanged(adapterPosition, items.size)
     }
 
     override fun getItemCount(): Int {
